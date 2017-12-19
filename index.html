@@ -27,17 +27,27 @@
 <meta charset="utf-8" />
 <title>new-test</title>
 <meta name="generator" content="Geany 1.32" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<!--
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+-->
 </head>
 
 <body>    
-    <div id="app">
-		<div class="nav nav-pills" id="main" v-show="status !== ''">
-			<a class="btn" v-on:click="goToMain">На главную</a>			
-		</div>
-		<div class="nav nav-bar"  v-show="status === ''" id="menu">
-			<a class="btn" v-on:click="edit">Создать анкету</a>
-			<a class="btn" v-on:click="play">Начать опрос</a>
+    <div id="app" class="container">
+		<aside id="main" v-show="status !== ''">
+			<a href="#" class="btn" v-on:click="goToMain">На главную</a>			
+		</aside>
+		<div class="col-sm-3">
+			<nav class=""  v-show="status === ''" id="menu">
+				<ul class="nav-tabs">
+					<li>
+						<a href="#" class="btn" v-on:click="edit">Создать анкету</a>
+					</li>
+					<li>
+						<a href="#" class="btn" v-on:click="play">Начать опрос</a>
+					</li>
+				</ul>
+			</nav>
 		</div>
 		<div v-show="status === 'edit'" id="editor">
 			
@@ -50,17 +60,11 @@
 	                <ol>
 	                  <li v-for="response in question.responses">
 	                    <label>
-	                      <input type="radio" v-bind:value="response.correct" v-bind:name="index" v-model="userResponses[index]"> 
-		                      {{response.text}}
+	                      <button @click="next(response.correct)">
+							  {{response.text}}
 	                    </label>
 	                  </li>
 	                </ol>
-	                <button v-if="questionIndex > 0" v-on:click="prev">
-	                    Предыдущий
-	                </button>
-	                <button v-on:click="next">
-	                    Следующий
-	                </button>
 	            </div>
 	        </div>
 			<div v-show="questionIndex === quiz.questions.length">
