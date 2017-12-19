@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+   index.html
+   
+   Copyright 2017 vlad <vlad@VLAD-PC>
+   
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
+   
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+   
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+   MA 02110-1301, USA.
+   
+   
+-->
+
+<head>
+<meta charset="utf-8" />
+<title>new-test</title>
+<meta name="generator" content="Geany 1.32" />
+</head>
+
+<body>
+    
+    <div id="app">
+        <h1>{{ quiz.title }}</h1>
+        <div v-for="(question,index) in quiz.questions">
+            <div v-show="index === questionIndex">
+                <h2>{{ question.text }}</h2>
+                <ol>
+                  <li v-for="response in question.responses">
+                    <label>
+                      <input type="radio" v-bind:value="response.correct" v-bind:name="index" v-model="userResponses[index]"> 
+	                      {{response.text}}
+                    </label>
+                  </li>
+                </ol>
+                <button v-if="questionIndex > 0" v-on:click="prev">
+                    Предыдущий
+                </button>
+                <button v-on:click="next">
+                    Следующий
+                </button>
+            </div>
+        </div>
+		<div v-show="questionIndex === quiz.questions.length">
+			<h2>Викторина завершена</h2>
+		    <p>
+		      Счет: {{ score() }} / {{ quiz.questions.length }}
+		    </p>
+		</div>
+    </div> 
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script> 
+    <script src="app.js"></script>      
+</body>
+
+</html>
+
