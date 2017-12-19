@@ -1,4 +1,6 @@
 window.onload=function(){
+	//~ var quiz_maker = new Vue();
+	
 	var quiz = {
 		title: 'Моя викторина',
 		questions: [
@@ -25,13 +27,16 @@ window.onload=function(){
 		]
 	}
 
+	//~ TODO:
+	//~ Добавить очистку результатов 
 	
 	new Vue({
 	  el: '#app',
 	  data: { 
 			quiz: quiz,
 			questionIndex: 0,
-		    userResponses: Array(quiz.questions.length).fill(false)
+		    userResponses: Array(quiz.questions.length).fill(false),
+		    status: ''
 	  },
 	  methods: {
 	    next: function() {
@@ -42,7 +47,17 @@ window.onload=function(){
 	    },
 	    score: function() {
 	      return this.userResponses.filter(function(val) { return val }).length;
-	    }
+	    },
+	    goToMain: function(){
+			this.status = '';
+		},
+		edit: function(){
+			this.status = 'edit';
+		},
+		play: function(){
+			this.status = 'play';
+			this.questionIndex = 0;
+		}
 	  }
 	});
 };
