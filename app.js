@@ -1,5 +1,4 @@
 window.onload=function(){
-	//~ var quiz_maker = new Vue();
 	
 	var quiz = {
 		title: 'Моя викторина',
@@ -28,25 +27,26 @@ window.onload=function(){
 	}
 
 	//~ TODO:
-	//~ Добавить очистку результатов 
+	//~ Add droping of past quiz
 	
 	new Vue({
 	  el: '#app',
 	  data: { 
 			quiz: quiz,
 			questionIndex: 0,
-		    userResponses: Array(quiz.questions.length).fill(false),
+			correctCount: 0,
 		    status: ''
 	  },
 	  methods: {
-	    next: function() {
+	    next: function(correct) {
+	      this.correctCount += !isNaN(correct); 
 	      this.questionIndex++;
 	    },
 	    prev: function() {
 	      this.questionIndex--;
 	    },
 	    score: function() {
-	      return this.userResponses.filter(function(val) { return val }).length;
+	      return this.correctCount;
 	    },
 	    goToMain: function(){
 			this.status = '';
@@ -61,3 +61,4 @@ window.onload=function(){
 	  }
 	});
 };
+		
