@@ -27,36 +27,48 @@
 <meta charset="utf-8" />
 <title>new-test</title>
 <meta name="generator" content="Geany 1.32" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 </head>
 
-<body>
-    
+<body>    
     <div id="app">
-        <h1>{{ quiz.title }}</h1>
-        <div v-for="(question,index) in quiz.questions">
-            <div v-show="index === questionIndex">
-                <h2>{{ question.text }}</h2>
-                <ol>
-                  <li v-for="response in question.responses">
-                    <label>
-                      <input type="radio" v-bind:value="response.correct" v-bind:name="index" v-model="userResponses[index]"> 
-	                      {{response.text}}
-                    </label>
-                  </li>
-                </ol>
-                <button v-if="questionIndex > 0" v-on:click="prev">
-                    Предыдущий
-                </button>
-                <button v-on:click="next">
-                    Следующий
-                </button>
-            </div>
-        </div>
-		<div v-show="questionIndex === quiz.questions.length">
-			<h2>Викторина завершена</h2>
-		    <p>
-		      Счет: {{ score() }} / {{ quiz.questions.length }}
-		    </p>
+		<div class="nav nav-pills" id="main" v-show="status !== ''">
+			<a class="btn" v-on:click="goToMain">На главную</a>			
+		</div>
+		<div class="nav nav-bar"  v-show="status === ''" id="menu">
+			<a class="btn" v-on:click="edit">Создать анкету</a>
+			<a class="btn" v-on:click="play">Начать опрос</a>
+		</div>
+		<div v-show="status === 'edit'" id="editor">
+			
+		</div>
+		<div v-show="status === 'play'" id="quiz">
+			<h1>{{ quiz.title }}</h1>
+	        <div v-for="(question,index) in quiz.questions">
+	            <div v-show="index === questionIndex">
+	                <h2>{{ question.text }}</h2>
+	                <ol>
+	                  <li v-for="response in question.responses">
+	                    <label>
+	                      <input type="radio" v-bind:value="response.correct" v-bind:name="index" v-model="userResponses[index]"> 
+		                      {{response.text}}
+	                    </label>
+	                  </li>
+	                </ol>
+	                <button v-if="questionIndex > 0" v-on:click="prev">
+	                    Предыдущий
+	                </button>
+	                <button v-on:click="next">
+	                    Следующий
+	                </button>
+	            </div>
+	        </div>
+			<div v-show="questionIndex === quiz.questions.length">
+				<h2>Викторина завершена</h2>
+			    <p>
+			      Счет: {{ score() }} / {{ quiz.questions.length }}
+			    </p>
+			</div>
 		</div>
     </div> 
     <script src="https://cdn.jsdelivr.net/npm/vue"></script> 
